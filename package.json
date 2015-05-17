@@ -1,0 +1,9 @@
+{
+  "name": "catfacts",
+  "description": "cat facts app",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "latest",
+    "stripe": "latest"
+  }
+}
