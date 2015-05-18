@@ -4,17 +4,6 @@ var path = require('path');
 var app = express();
 var MongoClient = require('mongodb').MongoClient;
 
-// Load all facts
-// to access: collections[collectionId][index]
-var collections = {}
-var filenames = fs.readdirSync(path.resolve(__dirname, 'collections'));
-filenames.forEach(function(filename) {
-  console.log('Loading ' + filename);
-  var text = fs.readFileSync('collections/' + filename) + '';
-  lines = text.match(/[^\r\n]+/g);
-  collections[filename] = lines;
-});
-
 var stripe = require('stripe')(
   require('./config.js').STRIPE_SK
 );
@@ -29,12 +18,13 @@ app.get('/', function(req, res) {
   serveFile('index.html', res);
 });
 
-
+// TODO: consider combining it with /pay
 app.get('/subscribe', function(req, res) {
   var newdoc = {
     user: req.query.user,
     friendNumber: req.query.friendNumber,
-    collectionId : req.query.collectionId
+    collectionId : req.query.collectionId,
+    factIndex: 0
   };
   phoneFacts.find(newdoc).toArray(function(err, docs) {
     if (docs.length > 0) {
