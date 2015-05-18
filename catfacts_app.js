@@ -1,7 +1,19 @@
 var express = require('express');
 var fs = require('fs');
+var path = require('path');
 var app = express();
 var MongoClient = require('mongodb').MongoClient;
+
+// Load all facts
+// to access: collections[collectionId][index]
+var collections = {}
+var filenames = fs.readdirSync(path.resolve(__dirname, 'collections'));
+filenames.forEach(function(filename) {
+  console.log('Loading ' + filename);
+  var text = fs.readFileSync('collections/' + filename) + '';
+  lines = text.match(/[^\r\n]+/g);
+  collections[filename] = lines;
+});
 
 var stripe = require('stripe')(
   require('./config.js').STRIPE_SK
