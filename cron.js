@@ -18,9 +18,15 @@ MongoClient.connect('mongodb://127.0.0.1:27017/PhoneFacts', function(err, db) {
   phoneFacts = db.collection('PhoneFacts');
   phoneFacts.find().toArray(function(err, docs) {
     docs.forEach(function(doc) {
-      if (doc.collectionId in collections && doc.factIndex != undefined) {
+      if (doc.collectionId in collections
+            && doc.factIndex != undefined
+            && doc.factIndex < collections[doc.collectionId].length) {
         console.log('Should send fact ' + collections[doc.collectionId][doc.factIndex]
           + " to number " + doc.friendNumber);
+        phoneFacts.update(doc, {$set: {factIndex: doc.factIndex + 1}},
+          function(err, count, opstatus) {
+            if (err) throw err;
+          });
       } else {
         console.log('Found invalid subscription user ' + doc.user + ' collection id '
           + doc.collectionId + ' fact index ' + doc.factIndex);
