@@ -14,6 +14,8 @@ MongoClient.connect('mongodb://127.0.0.1:27017/PhoneFacts', function(err, db) {
     phoneFacts = db.collection('PhoneFacts');
 });
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.get('/', function(req, res) {
   serveFile('index.html', res);
 });
