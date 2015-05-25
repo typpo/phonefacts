@@ -30,7 +30,9 @@
         $.fn.fullpage.moveTo(2);
       });
       $(".category").click(function(event) {
+        $("#factholder").empty();
         facts[event.target.innerText].forEach(function(element) {
+          console.log(element);
           $("#factholder").append("<div class='button fact'>" + element + "</div>");
         });
         $('#section2').css("display", "");
@@ -65,7 +67,7 @@
 	<div class="section" id="section1" data-achor="Category" style="display:none">
     <h1>Pick category</h1>
     <div class="button category">Animal</div>
-    <div class="button cateogry">History</div>
+    <div class="button category">History</div>
     <div class="button category">Plants</div>
     <div class="button category">Space</div>
   </div>
