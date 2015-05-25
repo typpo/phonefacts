@@ -21,9 +21,9 @@ app.get('/', function(req, res) {
 });
 
 // TODO: consider combining it with /pay
-app.get('/subscribe', function(req, res) {
+function subscribe(req, res) {
   var newdoc = {
-    user: req.query.user,
+    user: req.query.email,
     friendNumber: req.query.friendNumber,
     collectionId : req.query.collectionId,
     factIndex: 0
@@ -37,7 +37,7 @@ app.get('/subscribe', function(req, res) {
       res.send({success: true});
     });
   });
-});
+}
 
 app.get('/pay', function (req, res) {
   stripe.charges.create({
@@ -51,7 +51,7 @@ app.get('/pay', function (req, res) {
       res.send('error');
       return;
     }
-    res.send('ok');
+    subscribe(req, res);
   });
 });
 
