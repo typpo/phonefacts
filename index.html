@@ -48,8 +48,8 @@
         token: function(token) {
         document.body.style.cursor='wait';
         $.get('/pay?email=' + token.email + '&tok=' + token.id + '&amount=99'
-          + '&friendNumber=' + $('#ponenumber').val()
-          + '&collectionId=' + collectionId,
+          + '&friendNumber=' + $("#phonenumber").val()
+          + '&collectionId=' + collectionId.toLowerCase(),
           function(resp) {
             document.body.style.cursor='default';
             if (resp.success) {
