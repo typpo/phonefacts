@@ -48,7 +48,7 @@ app.get('/pay', function (req, res) {
   }, function(err, charge) {
     if (err) {
       console.log(err, charge);
-      res.send('error');
+      res.send({success: false, error: 'invalid card'});
       return;
     }
     subscribe(req, res);
